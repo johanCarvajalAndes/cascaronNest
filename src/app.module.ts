@@ -9,6 +9,11 @@ import { JoiValidationSchema } from './config/joi.validation';
       validationSchema: JoiValidationSchema, //puede ser este sola o los dos
     }),
     TypeOrmModule.forRoot({
+      ssl: process.env.NODE_ENV === 'prod',
+      extra: {
+        ssl:
+          process.env.STAGE === 'prod' ? { rejectUnauthorized: false } : null,
+      },
       type: 'postgres',
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
