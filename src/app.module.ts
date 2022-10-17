@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommonModule } from './common/common.module';
 import { JoiValidationSchema } from './config/joi.validation';
@@ -24,6 +25,10 @@ import { JoiValidationSchema } from './config/joi.validation';
       synchronize: true, //falso en produccion
     }),
     CommonModule,
+    ThrottlerModule.forRoot({
+      ttl: +process.env.TTL,
+      limit: +process.env.LIMIT_ENDPOINT,
+    }),
   ],
 })
 export class AppModule {}
