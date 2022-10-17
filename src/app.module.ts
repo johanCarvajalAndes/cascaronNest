@@ -13,7 +13,9 @@ import { JoiValidationSchema } from './config/joi.validation';
       ssl: process.env.NODE_ENV === 'prod',
       extra: {
         ssl:
-          process.env.STAGE === 'prod' ? { rejectUnauthorized: false } : null,
+          process.env.NODE_ENV === 'prod'
+            ? { rejectUnauthorized: false }
+            : null,
       },
       type: 'postgres',
       host: process.env.DB_HOST,
